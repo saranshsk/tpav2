@@ -7,15 +7,19 @@ from source_file_watcher import SourceFileWatcher
 class SourceToStageLoad():
     def __init__(self):
         print("Program purpose: This module reads the CIF file and inserts the same into the database")
-    def fn_insert_data_to_stage(dff_path, DFF_FILE_DELIM):
+    def fn_insert_data_to_stage(self,dff_path,DFF_FILE_DELIM):
+        print(dff_path)
+        print(DFF_FILE_DELIM)
         column_string=""
         values_string=""
         insert_query_1=""
         var=","
         lines=[]
         i=0
+        print("test1")
         DFF_FILE_DELIM=DFF_FILE_DELIM.rstrip()
         validation_cmd = "awk -F'<INP_DELIM>' '{print NF;exit}' <INP>"
+        print(validation_cmd)
         validation_cmd = validation_cmd.replace('<INP>', dff_path)
         validation_cmd = validation_cmd.replace('<INP_DELIM>', DFF_FILE_DELIM)
         print(validation_cmd)
@@ -26,6 +30,7 @@ class SourceToStageLoad():
         print(validation_cmd_result.rstrip(), err.rstrip())
         if p.returncode == 0:
             column_count = int(validation_cmd_result.rstrip())
+            print
             for x in range(1, column_count+1):
                 if x < column_count:
                     column_string = column_string+'c'+str(x)+','
